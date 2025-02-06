@@ -1,0 +1,63 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: action
+name: 'Register build artifact'
+description: 'Creates an artifact version association with the workflow run.'
+
+inputs:
+  component-id:
+    description: 'The CloudBees platform component ID..'
+    required: true
+  name:
+    description: 'The name of the artifact.'
+    required: true
+  version:
+    description: 'The version of the artifact.'
+    required: true
+  url:
+    description: 'The url where the artifact version is located e.g. docker.io/myapp/myimg:1.0.0.'
+    required: true
+  url-for-gha:
+    description: 'The url of the GHA workflow run that generated the artifact version.'
+    required: true
+  digest:
+    description: 'The artifact digest that uniquely and immutably identifies the artifact.'
+
+runs:
+  using: composite
+  steps:
+    - id: registerBuildArtifact
+      name: Register CloudBees Build Artifact
+      uses: docker://esolang/jq:latest
+      run: |
+        #Create payload
+        echo '{ "runId": "'"$CLOUDBEES_RUN_ID"'", "runAttempt": "'"$CLOUDBEES_RUN_ATTEMPT"'",' > /tmp/payload.json 
+        echo '"name": "'"$INPUT_NAME"'", "url": "'"$INPUT_URL"'", "version": "'"$INPUT_VERSION"'", ' >> /tmp/payload.json
+        echo '"operation": "'"PUBLISHED"'"' >> /tmp/payload.json
+        # digest argument is optional
+        if [ -n "$INPUT_DIGEST" ]; 
+        then
+          echo ', "digest": "'"$INPUT_DIGEST"'"' >> /tmp/payload.json
+        fi
+        echo ' }' >> /tmp/payload.json
+
+        # Make Platform API call to create artifact_info record
+        response=$(curl --fail-with-body  -X 'POST' "$URL/v2/workflows/runs/artifactinfos" \
+          -H "Authorization: Bearer $JWT" -H 'Content-Type: application/json' \
+          --data-binary '@/tmp/payload.json') || command_failed=1
+       
+        # Check curl exit code
+        if [ ${command_failed:-0} -eq 1 ];
+        then
+          echo "Platform API call failed with error: '$response'"
+          exit 1
+        fi
+      env:
+        JWT: ${{ cloudbees.api.token }}
+        URL: ${{ cloudbees.api.url }}
+        INPUT_NAME: ${{ inputs.name }}
+        INPUT_VERSION: ${{ inputs.version }}
+        INPUT_URL: ${{ inputs.url }}
+        INPUT_DIGEST: ${{ inputs.digest }}
+        CLOUDBEES_RUN_ID: ${{ cloudbees.run_id }}
+        CLOUDBEES_RUN_ATTEMPT: ${{ cloudbees.run_attempt }}
+
