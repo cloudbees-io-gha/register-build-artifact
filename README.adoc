@@ -1,0 +1,73 @@
+= GitHub action: Inform CloudBees Platform that an artifact version was created
+
+Use this action to inform CloudBees Platform that an artifact version was created
+
+== Inputs
+
+[cols="2a,1a,1a,3a",options="header"]
+.Input details
+|===
+| Input name
+| Data type
+| Required?
+| Description
+
+| `Component ID`
+| String
+| Yes
+| The CloudBees platform component ID.
+
+| `name`
+| String
+| Yes
+| The name of the artifact.
+
+| `version`
+| String
+| Yes
+| The version of the artifact.
+
+| `url`
+| String
+| Yes
+| The url where the artifact version is located e.g. docker.io/myapp/myimg:1.0.0.
+
+| `url-for-gha`
+| String
+| Yes
+| The url of the GHA workflow run that generated the artifact version.
+
+| `digest`
+| String
+| No
+| The artifact digest that uniquely and immutably identifies the artifact.
+
+|===
+
+== Usage example
+
+In your YAML file, add:
+
+[source,yaml]
+----
+      - name: Inform system that an artifact version was created
+        uses: cloudbees-io/register-build-artifact@v1
+        with:
+          component-id: "myComponent"
+          name: "myApp"
+          version: "1.0.0"
+          url: "docker.io/myapp/myimg:1.0.0"
+          url-for-gha: ""
+          digest: "sha256:5e0687d9471728b0a200e0a3840fa16466150c58f628dc6e6c40a9b07e3b3609"
+
+----
+
+== License
+
+This code is made available under the 
+link:https://opensource.org/license/mit/[MIT license].
+
+== References
+
+* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-saas-platform-actions/latest/[using actions in CloudBees workflows].
+* Learn about link:https://docs.cloudbees.com/docs/cloudbees-saas-platform/latest/[the CloudBees platform].
