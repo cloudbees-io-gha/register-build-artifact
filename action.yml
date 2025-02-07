@@ -16,9 +16,6 @@ inputs:
   url:
     description: 'The url where the artifact version is located e.g. docker.io/myapp/myimg:1.0.0.'
     required: true
-  url-for-gha:
-    description: 'The url of the GHA workflow run that generated the artifact version.'
-    required: true
   digest:
     description: 'The artifact digest that uniquely and immutably identifies the artifact.'
 
@@ -30,18 +27,11 @@ runs:
       uses: docker://esolang/jq:latest
       run: |
         #Create payload
-        echo '{ "runId": "'"$CLOUDBEES_RUN_ID"'", "runAttempt": "'"$CLOUDBEES_RUN_ATTEMPT"'",' > /tmp/payload.json 
-        echo '"name": "'"$INPUT_NAME"'", "url": "'"$INPUT_URL"'", "version": "'"$INPUT_VERSION"'", ' >> /tmp/payload.json
-        echo '"operation": "'"PUBLISHED"'"' >> /tmp/payload.json
-        # digest argument is optional
-        if [ -n "$INPUT_DIGEST" ]; 
-        then
-          echo ', "digest": "'"$INPUT_DIGEST"'"' >> /tmp/payload.json
-        fi
-        echo ' }' >> /tmp/payload.json
+        echo '{ "name": "'"$INPUT_NAME"'", "url": "'"$INPUT_URL"'", "version": "'"$INPUT_VERSION"'", ' > /tmp/payload.json
+        echo '"operation": "'"PUBLISHED"'" "sourceUrl":"'"$GITHUB_RUN_URL"'" "digest": "'"$INPUT_DIGEST"'"' >> /tmp/payload.json
 
         # Make Platform API call to create artifact_info record
-        response=$(curl --fail-with-body  -X 'POST' "$URL/v2/workflows/runs/artifactinfos" \
+        response=$(curl --fail-with-body  -X 'POST' "$INPUT_URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos" \
           -H "Authorization: Bearer $JWT" -H 'Content-Type: application/json' \
           --data-binary '@/tmp/payload.json') || command_failed=1
        
@@ -54,10 +44,13 @@ runs:
       env:
         JWT: ${{ cloudbees.api.token }}
         URL: ${{ cloudbees.api.url }}
+        INPUT_COMPONENT_ID: ${{ inputs.component-id }}
         INPUT_NAME: ${{ inputs.name }}
         INPUT_VERSION: ${{ inputs.version }}
         INPUT_URL: ${{ inputs.url }}
         INPUT_DIGEST: ${{ inputs.digest }}
         CLOUDBEES_RUN_ID: ${{ cloudbees.run_id }}
         CLOUDBEES_RUN_ATTEMPT: ${{ cloudbees.run_attempt }}
+        GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/jobs/${{ github.job_id }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
