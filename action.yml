@@ -1,11 +1,15 @@
-apiVersion: automation.cloudbees.io/v1alpha1
-kind: action
 name: 'Register build artifact'
-description: 'Creates an artifact version association with the workflow run.'
+description: 'Creates an artifact version association with the workflow run'
 
 inputs:
+  cloudbees-url:
+    description: 'The CloudBees platform URL.'
+    required: true
+  cloudbees-pat:
+    description: 'The CloudBees platform personal access token.'
+    required: true
   component-id:
-    description: 'The CloudBees platform component ID..'
+    description: 'The CloudBees platform component ID.'
     required: true
   name:
     description: 'The name of the artifact.'
@@ -24,17 +28,25 @@ runs:
   steps:
     - id: registerBuildArtifact
       name: Register CloudBees Build Artifact
-      uses: docker://esolang/jq:latest
+      shell: bash
       run: |
         #Create payload
         echo '{ "name": "'"$INPUT_NAME"'", "url": "'"$INPUT_URL"'", "version": "'"$INPUT_VERSION"'", ' > /tmp/payload.json
-        echo '"operation": "'"PUBLISHED"'" "sourceUrl":"'"$GITHUB_RUN_URL"'" "digest": "'"$INPUT_DIGEST"'"' >> /tmp/payload.json
+        echo '"operation": "'"PUBLISHED"'", "sourceUrl":"'"$GITHUB_RUN_URL"'", "digest": "'"$INPUT_DIGEST"'" }' >> /tmp/payload.json
+
+        #DEBUG
+        #echo This is the payload
+        #cat /tmp/payload.json
+        #echo This is the POST
+        #echo "$URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos"
+        #echo CLOUDBEES_PLATFORM_PAT="$JWT"
+        #echo CLOUDBEES_PLATFORM_URL="$URL"
 
         # Make Platform API call to create artifact_info record
-        response=$(curl --fail-with-body  -X 'POST' "$INPUT_URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos" \
+        response=$(curl --fail-with-body  -X 'POST' "$URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos" \
           -H "Authorization: Bearer $JWT" -H 'Content-Type: application/json' \
           --data-binary '@/tmp/payload.json') || command_failed=1
-       
+        
         # Check curl exit code
         if [ ${command_failed:-0} -eq 1 ];
         then
@@ -42,15 +54,12 @@ runs:
           exit 1
         fi
       env:
-        JWT: ${{ cloudbees.api.token }}
-        URL: ${{ cloudbees.api.url }}
+        JWT: ${{ inputs.cloudbees-pat }}
+        URL: ${{ inputs.cloudbees-url }}
         INPUT_COMPONENT_ID: ${{ inputs.component-id }}
         INPUT_NAME: ${{ inputs.name }}
         INPUT_VERSION: ${{ inputs.version }}
         INPUT_URL: ${{ inputs.url }}
         INPUT_DIGEST: ${{ inputs.digest }}
-        CLOUDBEES_RUN_ID: ${{ cloudbees.run_id }}
-        CLOUDBEES_RUN_ATTEMPT: ${{ cloudbees.run_attempt }}
-        GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/jobs/${{ github.job_id }}
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        GITHUB_RUN_URL: ${{ github.repositoryUrl }}/actions/jobs/${{ github.job }}
+        GH_TOKEN: ${{ github.secrets.GITHUB_TOKEN }}
