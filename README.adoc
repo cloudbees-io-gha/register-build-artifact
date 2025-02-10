@@ -57,7 +57,7 @@ In your YAML file, add:
 ----
     steps:
       - name: Deploy artifact
-        uses: ./.github/actions/register-build-artifact
+        uses: cloudbees-gha-cbp/register-build-artifact@v1
         with:
           component-id: "172f9991-e542-4605-958f-3ab17f2f5cda"
           name: "myArtifact"
