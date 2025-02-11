@@ -12,6 +12,16 @@ Use this action to inform CloudBees Platform that an artifact version was create
 | Required?
 | Description
 
+| `CloudBees URL`
+| String
+| Yes
+| The CloudBees platform URL.
+
+| `CloudBees PAT`
+| String
+| Yes
+| The CloudBees platform personal access token.
+
 | `Component ID`
 | String
 | Yes
@@ -32,11 +42,6 @@ Use this action to inform CloudBees Platform that an artifact version was create
 | Yes
 | The url where the artifact version is located e.g. docker.io/myapp/myimg:1.0.0.
 
-| `url-for-gha`
-| String
-| Yes
-| The url of the GHA workflow run that generated the artifact version.
-
 | `digest`
 | String
 | No
@@ -50,16 +55,17 @@ In your YAML file, add:
 
 [source,yaml]
 ----
-      - name: Inform system that an artifact version was created
-        uses: cloudbees-io/register-build-artifact@v1
+    steps:
+      - name: Deploy artifact
+        uses: cloudbees-gha-cbp/register-build-artifact@v1
         with:
-          component-id: "myComponent"
-          name: "myApp"
+          component-id: "172f9991-e542-4605-958f-3ab17f2f5cda"
+          name: "myArtifact"
           version: "1.0.0"
           url: "docker.io/myapp/myimg:1.0.0"
-          url-for-gha: ""
-          digest: "sha256:5e0687d9471728b0a200e0a3840fa16466150c58f628dc6e6c40a9b07e3b3609"
-
+          digest: ""
+          cloudbees-url: ${{ vars.CLOUDBEES_PLATFORM_URL }}
+          cloudbees-pat: ${{ secrets.CLOUDBEES_PLATFORM_PAT }}
 ----
 
 == License
