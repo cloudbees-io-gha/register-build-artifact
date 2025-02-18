@@ -12,17 +12,17 @@ Use this action to inform CloudBees Platform that an artifact version was create
 | Required?
 | Description
 
-| `CloudBees URL`
+| `cloudbees-url`
 | String
 | Yes
 | The CloudBees platform URL.
 
-| `CloudBees PAT`
+| `cloudbees-pat`
 | String
 | Yes
 | The CloudBees platform personal access token.
 
-| `Component ID`
+| `component-id`
 | String
 | Yes
 | The CloudBees platform component ID.
