@@ -35,12 +35,12 @@ runs:
         echo '"operation": "'"PUBLISHED"'", "sourceUrl":"'"$GITHUB_RUN_URL"'", "digest": "'"$INPUT_DIGEST"'" }' >> /tmp/payload.json
 
         #DEBUG
-        #echo This is the payload
-        #cat /tmp/payload.json
-        #echo This is the POST
-        #echo "$INPUT_CLOUDBEES_URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos"
-        #echo CLOUDBEES_PLATFORM_PAT="$INPUT_JWT"
-        #echo CLOUDBEES_PLATFORM_URL="$INPUT_CLOUDBEES_URL"
+        echo This is the payload
+        cat /tmp/payload.json
+        echo This is the POST
+        echo "$INPUT_CLOUDBEES_URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos"
+        echo CLOUDBEES_PLATFORM_PAT="$INPUT_JWT"
+        echo CLOUDBEES_PLATFORM_URL="$INPUT_CLOUDBEES_URL"
 
         # Make Platform API call to create artifact_info record
         response=$(curl --fail-with-body  -X 'POST' "$INPUT_CLOUDBEES_URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos" \
