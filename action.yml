@@ -61,4 +61,4 @@ runs:
         INPUT_VERSION: ${{ inputs.version }}
         INPUT_URL: ${{ inputs.url }}
         INPUT_DIGEST: ${{ inputs.digest }}
-        GITHUB_RUN_URL: ${{ github.repositoryUrl }}/actions/jobs/${{ github.job }}
+        GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
