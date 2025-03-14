@@ -8,9 +8,6 @@ inputs:
   cloudbees-pat:
     description: 'The CloudBees platform personal access token.'
     required: true
-  component-id:
-    description: 'The CloudBees platform component ID.'
-    required: true
   name:
     description: 'The name of the artifact.'
     required: true
@@ -22,43 +19,19 @@ inputs:
     required: true
   digest:
     description: 'The artifact digest that uniquely and immutably identifies the artifact.'
+    required: false
+  type:
+    description: 'The type of the artifact. e.g. docker, maven'
+    required: false
 
 runs:
-  using: composite
-  steps:
-    - id: registerBuildArtifact
-      name: Register CloudBees Build Artifact
-      shell: bash
-      run: |
-        #Create payload
-        echo '{ "name": "'"$INPUT_NAME"'", "url": "'"$INPUT_URL"'", "version": "'"$INPUT_VERSION"'", ' > /tmp/payload.json
-        echo '"operation": "'"PUBLISHED"'", "sourceUrl":"'"$GITHUB_RUN_URL"'", "digest": "'"$INPUT_DIGEST"'" }' >> /tmp/payload.json
-
-        #DEBUG
-        #echo This is the payload
-        #cat /tmp/payload.json
-        #echo This is the POST
-        #echo "$INPUT_CLOUDBEES_URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos"
-        #echo CLOUDBEES_PLATFORM_PAT="$INPUT_JWT"
-        #echo CLOUDBEES_PLATFORM_URL="$INPUT_CLOUDBEES_URL"
-
-        # Make Platform API call to create artifact_info record
-        response=$(curl --fail-with-body  -X 'POST' "$INPUT_CLOUDBEES_URL/v2/resources/$INPUT_COMPONENT_ID/artifactinfos" \
-          -H "Authorization: Bearer $INPUT_JWT" -H 'Content-Type: application/json' \
-          --data-binary '@/tmp/payload.json') || command_failed=1
-        
-        # Check curl exit code
-        if [ ${command_failed:-0} -eq 1 ];
-        then
-          echo "Platform API call failed with error: '$response'"
-          exit 1
-        fi
-      env:
-        INPUT_JWT: ${{ inputs.cloudbees-pat }}
-        INPUT_CLOUDBEES_URL: ${{ inputs.cloudbees-url }}
-        INPUT_COMPONENT_ID: ${{ inputs.component-id }}
-        INPUT_NAME: ${{ inputs.name }}
-        INPUT_VERSION: ${{ inputs.version }}
-        INPUT_URL: ${{ inputs.url }}
-        INPUT_DIGEST: ${{ inputs.digest }}
-        GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+  using: "docker"
+  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-9905592c24905185a67fc841703877862450549f"
+  env:
+    CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
+    CLOUDBEES_API_TOKEN: ${{ inputs.cloudbees-pat }}
+    ARTIFACT_NAME: ${{ inputs.name }}
+    ARTIFACT_VERSION: ${{ inputs.version }}
+    ARTIFACT_URL: ${{ inputs.url }}
+    ARTIFACT_DIGEST: ${{ inputs.digest }}
+    ARTIFACT_TYPE: ${{ inputs.type }}
