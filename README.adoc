@@ -95,5 +95,5 @@ link:https://opensource.org/license/mit/[MIT license].
 
 == References
 
-* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/third-party-ci-tools/github/index[GitHub Actions].
+* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/third-party-ci-tools/github/index[Using GitHub Actions with the CloudBees platform].
 * Learn about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/[the CloudBees platform].
