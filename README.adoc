@@ -20,10 +20,7 @@ Use this GitHub Action (GHA) for artifact traceability purposes to inform the Cl
 .^| `cloudbees-pat`
 ^.^| String
 ^.^| Yes
-| The CloudBees platform personal access token, located in the CloudBees platform component URL:
-
-. Navigate to a component in the CloudBees platform.
-. Copy the UUID after `componentId=` in the URL.
+| The link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/workflows/personal-access-token[CloudBees platform personal access token].
 
 .^| `name`
 ^.^| String
