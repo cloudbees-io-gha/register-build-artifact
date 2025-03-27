@@ -60,7 +60,7 @@ steps:
         uses: cloudbees-gha-cbp/register-build-artifact@v2
         with:
           cloudbees-url: "https://api.cloudbees.io"
-          cloudbees-pat: ${{ <secrets.CloudBees-platform-PAT> }}
+          cloudbees-pat: ${{ secrets.CloudBees-platform-PAT }}
           name: my-artifact
           version: 1.0.0
           url: "https://my-artifact-url.com"
@@ -76,7 +76,7 @@ steps:
         uses: cloudbees-gha-cbp/register-build-artifact@v2
         with:
           cloudbees-url: "https://api.cloudbees.io"
-          cloudbees-pat: ${{ <secrets.CloudBees-platform-PAT> }}
+          cloudbees-pat: ${{ secrets.CloudBees-platform-PAT }}
           name: my-Docker-artifact
           version: 1.0.0
           url: "https://hub.docker.com/repository/docker/example"
@@ -92,5 +92,5 @@ link:https://opensource.org/license/mit/[MIT license].
 
 == References
 
-* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/third-party-ci-tools/github/index[Using GitHub Actions with the CloudBees platform].
+* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/third-party-ci-services/github/index[Using GitHub Actions with the CloudBees platform].
 * Learn about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/[the CloudBees platform].
