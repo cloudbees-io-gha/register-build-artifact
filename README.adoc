@@ -138,7 +138,7 @@ jobs:
 ----
 --
 
-After the run has completed, the artifact information is displayed in both the *Artifacts* list and the *Build artifacts* tab of *Run details* in the {PRODUCT}.
+After the run has completed, the artifact information is displayed in both the *Artifacts* list and the *Build artifacts* tab of *Run details* in the platform.
 The artifact is shown to be published by the GHA workflow.
 
 == License
