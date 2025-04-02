@@ -14,7 +14,7 @@ Use this GitHub Action (GHA) for artifact traceability purposes to inform the Cl
 
 .^| `cloudbees-url`
 ^.^| String
-^.^| Yes
+^.^| No
 | The CloudBees platform URL. Typically, this value is `"https://api.cloudbees.io"`.
 
 .^| `cloudbees-pat`
@@ -55,7 +55,7 @@ The following is a basic example for using the v2 action:
 
 [source,yaml]
 ----
-steps:
+    steps:
       - name: register-artifact-step
         uses: cloudbees-gha-cbp/register-build-artifact@v2
         with:
@@ -71,7 +71,7 @@ The following example specifies the artifact digest:
 
 [source,yaml]
 ----
-steps:
+    steps:
       - name: register-artifact-step-digest
         uses: cloudbees-gha-cbp/register-build-artifact@v2
         with:
@@ -92,5 +92,5 @@ link:https://opensource.org/license/mit/[MIT license].
 
 == References
 
-* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/third-party-ci-services/github/index[Using GitHub Actions with the CloudBees platform].
+* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/third-party-actions/github/gha-register-build-artifact[Using GitHub Actions with the CloudBees platform].
 * Learn about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/[the CloudBees platform].
