@@ -4,7 +4,8 @@ description: 'Creates an artifact version association with the workflow run'
 inputs:
   cloudbees-url:
     description: 'The CloudBees platform URL.'
-    required: true
+    required: false
+    default: "https://api.cloudbees.io"
   cloudbees-pat:
     description: 'The CloudBees platform personal access token.'
     required: true
