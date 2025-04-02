@@ -12,11 +12,6 @@ Use this GitHub Action (GHA) for artifact traceability purposes to inform the Cl
 | Required?
 | Description
 
-| `cloudbees-url`
-| String
-| Yes
-| The CloudBees platform URL. Typically, this value is `"https://api.cloudbees.io"`.
-
 | `cloudbees-pat`
 | String
 | Yes
@@ -36,6 +31,11 @@ Use this GitHub Action (GHA) for artifact traceability purposes to inform the Cl
 | String
 | Yes
 | The URL where the artifact version can be pulled for deployment.
+
+| `cloudbees-url`
+| String
+| No
+| The CloudBees platform URL. Typically, this value is `"https://api.cloudbees.io"`.
 
 | `digest`
 | String
@@ -60,7 +60,6 @@ The following is a basic example for using the v2 action:
       - name: register-artifact-step
         uses: cloudbees-gha-cbp/register-build-artifact@v2
         with:
-          cloudbees-url: "https://api.cloudbees.io"
           cloudbees-pat: ${{ secrets.CloudBees-platform-PAT }}
           name: my-artifact
           version: 1.0.0
