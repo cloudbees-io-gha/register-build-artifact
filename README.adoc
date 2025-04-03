@@ -4,48 +4,49 @@ Use this GitHub Action (GHA) for artifact traceability purposes to inform the Cl
 
 == Inputs
 
-[cols="2a,1a,1a,3a",options="header"]
+[cols="22%a,15%a,15%a,48%a",options="header"]
 .Input details
 |===
-^| Input name
-^| Data type
-^| Required?
-^| Description
+| Input name
+| Data type
+| Required?
+| Description
 
-.^| `cloudbees-url`
-^.^| String
-^.^| No
-| The CloudBees platform URL. Typically, this value is `"https://api.cloudbees.io"`.
-
-.^| `cloudbees-pat`
-^.^| String
-^.^| Yes
+| `cloudbees-pat`
+| String
+| Yes
 | The link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/workflows/personal-access-token[CloudBees platform personal access token].
 
-.^| `name`
-^.^| String
-^.^| Yes
+| `name`
+| String
+| Yes
 | The name of the artifact to send to the CloudBees platform for artifact traceability purposes.
 
-.^| `version`
-^.^| String
-^.^| Yes
+| `version`
+| String
+| Yes
 | The version of the artifact to send to the CloudBees platform for artifact traceability purposes.
 
-.^| `url`
-^.^| String
-^.^| Yes
-| The URL where the artifact version can be pulled for deployment. 
+| `url`
+| String
+| Yes
+| The URL where the artifact version can be pulled for deployment.
 
-.^| `digest`
-^.^| String
-^.^| No
+| `cloudbees-url`
+| String
+| No
+| The CloudBees platform URL. Typically, this value is `"https://api.cloudbees.io"`.
+
+| `digest`
+| String
+| No
 | The artifact digest that uniquely identifies the artifact.
 
-.^| `type`
-^.^| String
-^.^| No
-| The type of the artifact, such as Docker or Maven.
+| `type`
+| String
+| No
+| The type of artifact, such as Docker or Maven.
+
 |===
 
 
@@ -59,7 +60,6 @@ The following is a basic example for using the v2 action:
       - name: register-artifact-step
         uses: cloudbees-gha-cbp/register-build-artifact@v2
         with:
-          cloudbees-url: "https://api.cloudbees.io"
           cloudbees-pat: ${{ secrets.CloudBees-platform-PAT }}
           name: my-artifact
           version: 1.0.0
@@ -85,6 +85,61 @@ The following example specifies the artifact digest:
 
 ----
 
+=== Full workflow and run example
+
+The following GHA workflow example uses version v2 of this action.
+Running this workflow creates an artifact that is reported to the platform, and the artifact is shown as published by the GHA workflow.
+
+.Example GHA workflow YAML file
+[.collapsible]
+--
+
+[source, yaml,role="default-expanded"]
+----
+name: GHA Workflow
+
+on:
+    workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compile Code
+        run: echo "Compiling..."
+
+      - name: Produce Binary
+        run: sleep 10
+
+      - name: Push binary
+        run: echo "Pushing Binary to ECR..."
+
+      - name: Register Build Artifacts in Cloudbees Platform
+        uses: cloudbees-gha-cbp/register-build-artifact@v2
+        id: go-action
+        with:
+          name: "gha-artifact-test"
+          version: 1.0.0
+          url: "docker.io/example:latest"
+          digest: "sha256:1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqr"
+          type: "docker"
+          cloudbees-url: "https://api.cloudbees.io"
+          cloudbees-pat: ${{ secrets.CBP_PAT }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]   # Depends on 'build' job
+    steps:
+      - name: Checkout to Prepare Manifest
+        uses: actions/checkout@v3
+
+      - name: Trigger Deployment
+        run: echo "Invoking CBP Deploy Workflow..."
+----
+--
+
+After the run has completed, the artifact information is displayed in both the *Artifacts* list and the *Build artifacts* tab of *Run details* in the platform.
+The artifact is shown to be published by the GHA workflow.
+
 == License
 
 This code is made available under the 
@@ -92,5 +147,5 @@ link:https://opensource.org/license/mit/[MIT license].
 
 == References
 
-* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/third-party-actions/github/gha-register-build-artifact[Using GitHub Actions with the CloudBees platform].
+* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/using-a-different-ci/github-actions/[Using GitHub Actions with the CloudBees platform].
 * Learn about link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/[the CloudBees platform].
