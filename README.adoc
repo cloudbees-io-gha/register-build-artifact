@@ -64,7 +64,7 @@ The following is a basic example for using the v2 action:
 ----
     steps:
       - name: register-artifact-step
-        uses: cloudbees-gha-cbp/register-build-artifact@v2
+        uses: cloudbees-io-gha/register-build-artifact@v2
         with:
           cloudbees-pat: ${{ secrets.CloudBees-platform-PAT }}
           name: my-artifact
@@ -79,7 +79,7 @@ The following example specifies the artifact digest:
 ----
     steps:
       - name: register-artifact-step-digest
-        uses: cloudbees-gha-cbp/register-build-artifact@v2
+        uses: cloudbees-io-gha/register-build-artifact@v2
         with:
           cloudbees-url: "https://api.cloudbees.io"
           cloudbees-pat: ${{ secrets.CloudBees-platform-PAT }}
@@ -121,7 +121,7 @@ jobs:
         run: echo "Pushing Binary to ECR..."
 
       - name: Register Build Artifacts in Cloudbees Platform
-        uses: cloudbees-gha-cbp/register-build-artifact@v2
+        uses: cloudbees-io-gha/register-build-artifact@v2
         id: go-action
         with:
           name: "gha-artifact-test"
