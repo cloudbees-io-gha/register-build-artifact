@@ -41,7 +41,7 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 | `cloudbees-url`
 | String
 | No
-| The CloudBees platform URL. Typically, this value is `"https://api.cloudbees.io"`.
+| The CloudBees platform URL. The default value is `"https://api.cloudbees.io"`.
 
 | `digest`
 | String
