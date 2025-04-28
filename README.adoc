@@ -146,6 +146,8 @@ jobs:
 After the run has completed, the artifact information is displayed in both the *Artifacts* list and the *Build artifacts* tab of *Run details* in the platform.
 The artifact is shown to be published by the GHA workflow.
 
+==== IMPORTANT: You must update to this version. All previous versions are deprecated.
+
 == License
 
 This code is made available under the 
