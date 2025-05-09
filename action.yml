@@ -31,7 +31,7 @@ inputs:
 
 runs:
   using: "docker"
-  image: "docker://020229604682.dkr.ecr.us-east-1.amazonaws.com/actions/gha-register-build-artifact:CBP-13628-020ce40edd873fe5e2c9980bbcbe57c444154683"
+  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-d74316bb81f9530c171ea5090f92b6ba0b7911bb"
   env:
     CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
     CLOUDBEES_API_TOKEN: ${{ inputs.cloudbees-pat }}
