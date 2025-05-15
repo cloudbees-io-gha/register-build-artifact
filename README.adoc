@@ -20,11 +20,6 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 | Required?
 | Description
 
-| `cloudbees-pat`
-| String
-| Only for v2
-| The CloudBees personal access token. Required only when using version v2 of the action. Not used in v3.
-
 | `name`
 | String
 | Yes
@@ -57,56 +52,9 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 
 |===
 
-== Version Support
-
-This action supports two versions:
-
-* **v3** – Recommended. Uses GitHub's OIDC authentication mechanism to securely authenticate with the CloudBees platform. No need to store secrets.
-* **v2** – Still supported. Uses a CloudBees Personal Access Token (`cloudbees-pat`) for authentication.
-
-Choose the version that best fits your environment and security requirements.
-
-IMPORTANT: v3 is the recommended version. It uses GitHub OIDC authentication for improved security and does not require storing secrets. v2 is still supported for environments that require personal access token (PAT) authentication.
-
-== v2 vs v3 Comparison
-
-[cols="25%,35%,40%", options="header"]
-|===
-| Feature | v2 | v3
-
-| Authentication
-| CloudBees Personal Access Token (`cloudbees-pat`)
-| GitHub OIDC Token (requires `permissions: id-token: write`)
-
-| Secrets management
-| Requires storing a secret in `secrets`
-| No secrets required
-
-| Recommendation
-| Supported
-| Recommended
-|===
-
 == Usage examples
 
-The following examples demonstrate usage for both v2 and v3 of this action. v3 uses GitHub OIDC authentication, while v2 uses a personal access token (PAT).
-
-=== Basic usage with v2 (PAT authentication)
-
-[source,yaml]
-----
-    steps:
-      - name: register-artifact-step
-        uses: cloudbees-io-gha/register-build-artifact@v2
-        with:
-          cloudbees-pat: ${{ secrets.CloudBees-platform-PAT }}
-          name: my-artifact
-          version: 1.0.0
-          url: "https://my-artifact-url.com"
-
-----
-
-=== Basic usage with v3 (OIDC authentication)
+The following is a basic example for using the v3 action:
 
 [source,yaml]
 ----
@@ -123,25 +71,7 @@ The following examples demonstrate usage for both v2 and v3 of this action. v3 u
 
 ----
 
-=== Using artifact digest with v2
-
-[source,yaml]
-----
-    steps:
-      - name: register-artifact-step-digest
-        uses: cloudbees-io-gha/register-build-artifact@v2
-        with:
-          cloudbees-url: "https://api.cloudbees.io"
-          cloudbees-pat: ${{ secrets.CloudBees-platform-PAT }}
-          name: my-Docker-artifact
-          version: 1.0.0
-          url: "https://hub.docker.com/repository/docker/example"
-          digest: "sha256:abcdef1234567890"
-          type: "Docker"
-
-----
-
-=== Using artifact digest with v3
+The following example specifies the artifact digest:
 
 [source,yaml]
 ----
