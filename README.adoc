@@ -5,7 +5,7 @@ To learn more about working with artifacts in the platform, refer to the link:ht
 
 IMPORTANT: You must update to this version. All previous versions are deprecated.
 
-== Prequisites
+== Prerequisites
 
 Set up the CloudBees platform and GHA to work together, providing key features of the platform to GHA workflows.
 Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-actions/gha-getting-started[Getting started with GHA integration] for more information.
@@ -22,8 +22,8 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 
 | `cloudbees-pat`
 | String
-| Yes
-| The link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/workflows/personal-access-token[CloudBees platform personal access token].
+| Only for v2
+| The CloudBees personal access token. Required only when using version v2 of the action. Not used in v3.
 
 | `name`
 | String
@@ -57,10 +57,41 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 
 |===
 
+== Version Support
+
+This action supports two versions:
+
+* **v3** – Recommended. Uses GitHub's OIDC authentication mechanism to securely authenticate with the CloudBees platform. No need to store secrets.
+* **v2** – Still supported. Uses a CloudBees Personal Access Token (`cloudbees-pat`) for authentication.
+
+Choose the version that best fits your environment and security requirements.
+
+IMPORTANT: v3 is the recommended version. It uses GitHub OIDC authentication for improved security and does not require storing secrets. v2 is still supported for environments that require personal access token (PAT) authentication.
+
+== v2 vs v3 Comparison
+
+[cols="25%,35%,40%", options="header"]
+|===
+| Feature | v2 | v3
+
+| Authentication
+| CloudBees Personal Access Token (`cloudbees-pat`)
+| GitHub OIDC Token (requires `permissions: id-token: write`)
+
+| Secrets management
+| Requires storing a secret in `secrets`
+| No secrets required
+
+| Recommendation
+| Supported
+| Recommended
+|===
 
 == Usage examples
 
-The following is a basic example for using the v2 action:
+The following examples demonstrate usage for both v2 and v3 of this action. v3 uses GitHub OIDC authentication, while v2 uses a personal access token (PAT).
+
+=== Basic usage with v2 (PAT authentication)
 
 [source,yaml]
 ----
@@ -75,7 +106,24 @@ The following is a basic example for using the v2 action:
 
 ----
 
-The following example specifies the artifact digest:
+=== Basic usage with v3 (OIDC authentication)
+
+[source,yaml]
+----
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: register-artifact-step
+        uses: cloudbees-io-gha/register-build-artifact@v3
+        with:
+          name: my-artifact
+          version: 1.0.0
+          url: "https://my-artifact-url.com"
+
+----
+
+=== Using artifact digest with v2
 
 [source,yaml]
 ----
@@ -93,9 +141,29 @@ The following example specifies the artifact digest:
 
 ----
 
+=== Using artifact digest with v3
+
+[source,yaml]
+----
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: register-artifact-step-digest
+        uses: cloudbees-io-gha/register-build-artifact@v3
+        with:
+          cloudbees-url: "https://api.cloudbees.io"
+          name: my-Docker-artifact
+          version: 1.0.0
+          url: "https://hub.docker.com/repository/docker/example"
+          digest: "sha256:abcdef1234567890"
+          type: "Docker"
+
+----
+
 === Full workflow and run example
 
-The following GHA workflow example uses version v2 of this action.
+The following GHA workflow example uses version v3 of this action.
 Running this workflow creates an artifact that is reported to the platform, and the artifact is shown as published by the GHA workflow.
 
 .Example GHA workflow YAML file
@@ -112,6 +180,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Compile Code
         run: echo "Compiling..."
@@ -123,7 +194,7 @@ jobs:
         run: echo "Pushing Binary to ECR..."
 
       - name: Register Build Artifacts in Cloudbees Platform
-        uses: cloudbees-io-gha/register-build-artifact@v2
+        uses: cloudbees-io-gha/register-build-artifact@v3
         id: go-action
         with:
           name: "gha-artifact-test"
@@ -132,7 +203,6 @@ jobs:
           digest: "sha256:1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqr"
           type: "docker"
           cloudbees-url: "https://api.cloudbees.io"
-          cloudbees-pat: ${{ secrets.CBP_PAT }}
   deploy:
     runs-on: ubuntu-latest
     needs: [build]   # Depends on 'build' job
