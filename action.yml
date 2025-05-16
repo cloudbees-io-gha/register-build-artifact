@@ -10,9 +10,6 @@ inputs:
     description: 'The CloudBees platform URL.'
     required: false
     default: "https://api.cloudbees.io"
-  cloudbees-pat:
-    description: 'The CloudBees platform personal access token.'
-    required: true
   name:
     description: 'The name of the artifact.'
     required: true
@@ -31,10 +28,9 @@ inputs:
 
 runs:
   using: "docker"
-  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-d74316bb81f9530c171ea5090f92b6ba0b7911bb"
+  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-0d13915b19a9638be8a2a3166395a00dc724b16d"
   env:
     CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
-    CLOUDBEES_API_TOKEN: ${{ inputs.cloudbees-pat }}
     ARTIFACT_NAME: ${{ inputs.name }}
     ARTIFACT_VERSION: ${{ inputs.version }}
     ARTIFACT_URL: ${{ inputs.url }}
