@@ -25,6 +25,8 @@ inputs:
   type:
     description: 'The type of the artifact. e.g. docker, maven'
     required: false
+  label:
+    description: 'The list of label of the artifact.'
 
 runs:
   using: "docker"
@@ -36,3 +38,4 @@ runs:
     ARTIFACT_URL: ${{ inputs.url }}
     ARTIFACT_DIGEST: ${{ inputs.digest }}
     ARTIFACT_TYPE: ${{ inputs.type }}
+    ARTIFACT_LABEL: ${{ inputs.label }}
