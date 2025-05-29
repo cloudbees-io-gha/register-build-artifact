@@ -163,7 +163,7 @@ jobs:
           type: "docker"
       
       - name: Registered Build ArtifactId
-        run: echo 'Registered Build ArtifactId ${{ steps.go-action.outputs.artifact_id }}'
+        run: echo 'Registered Build ArtifactId ${{ steps.go-action.outputs.cbp_artifact_id }}'
 
   deploy:
     runs-on: ubuntu-latest
