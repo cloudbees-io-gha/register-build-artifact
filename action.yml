@@ -28,6 +28,10 @@ inputs:
   label:
     description: 'The list of label of the artifact.'
 
+outputs:
+  artifact_id:
+    description: "The Id of registered artifact"
+
 runs:
   using: "docker"
   image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-473a2e21c3387ae5c566cb338fb52d05beb740b3"
