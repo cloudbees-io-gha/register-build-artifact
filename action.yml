@@ -30,7 +30,7 @@ inputs:
 
 outputs:
   cbp_artifact_id:
-    description: "The Id of registered artifact"
+    description: "The Id of registered build artifact"
 
 runs:
   using: "docker"
