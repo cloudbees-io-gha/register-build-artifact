@@ -55,11 +55,6 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 | No
 | The type of artifact, such as Docker or Maven.
 
-| `label`
-| String
-| No
-| The label to be attached with the artifact, It is coma seperated values.
-
 |===
 
 
