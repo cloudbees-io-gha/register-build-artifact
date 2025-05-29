@@ -29,7 +29,7 @@ inputs:
     description: 'The list of label of the artifact.'
 
 outputs:
-  artifact_id:
+  cbp_artifact_id:
     description: "The Id of registered artifact"
 
 runs:
