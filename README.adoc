@@ -45,6 +45,11 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 | No
 | The artifact digest that uniquely identifies the artifact.
 
+| `label`
+| String 
+| No 
+| The list of labels for the artifact.
+
 | `type`
 | String
 | No
@@ -131,9 +136,11 @@ jobs:
           name: "gha-artifact-test"
           version: 1.0.0
           url: "docker.io/example:latest"
-          digest: "sha256:1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqr"
-          type: "docker"
           cloudbees-url: "https://api.cloudbees.io"
+          digest: "sha256:1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqr"
+          label: "For testing"
+          type: "docker"
+
   deploy:
     runs-on: ubuntu-latest
     needs: [build]   # Depends on 'build' job
