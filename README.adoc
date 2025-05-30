@@ -97,6 +97,27 @@ The following example specifies the artifact digest:
 
 ----
 
+The following example specifies the artifact label:
+
+[source,yaml]
+----
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: register-artifact-step-digest
+        uses: cloudbees-io-gha/register-build-artifact@v3
+        with:
+          cloudbees-url: "https://api.cloudbees.io"
+          name: my-Docker-artifact
+          version: 1.0.0
+          url: "https://hub.docker.com/repository/docker/example"
+          digest: "sha256:abcdef1234567890"
+          type: "Docker"
+          label: "staging,prod"
+
+----
+
 === Full workflow and run example
 
 The following GHA workflow example uses version v3 of this action.
@@ -140,6 +161,9 @@ jobs:
           digest: "sha256:1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqr"
           label: "For testing"
           type: "docker"
+      
+      - name: Registered Build ArtifactId
+        run: echo 'Registered Build ArtifactId ${{ steps.go-action.outputs.cbp_artifact_id }}'
 
   deploy:
     runs-on: ubuntu-latest
