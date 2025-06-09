@@ -57,6 +57,21 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 
 |===
 
+=== Outputs
+
+[cols="2a,1a,3a",options="header"]
+.Output details
+|===
+| Output name
+| Data type
+| Description
+
+| `cbp_artifact_id`
+| String
+| The identifier of the artifact sent to the 
+CloudBees platform for artifact traceability purposes.
+
+|===
 
 == Usage examples
 
