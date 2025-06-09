@@ -92,7 +92,7 @@ The following is a basic example for using the v3 action:
 
 ----
 
-The following example specifies the artifact digest:
+The following example specifies the artifact digest and label:
 
 [source,yaml]
 ----
@@ -100,27 +100,7 @@ The following example specifies the artifact digest:
       id-token: write
       contents: read
     steps:
-      - name: register-artifact-step-digest
-        uses: cloudbees-io-gha/register-build-artifact@v3
-        with:
-          cloudbees-url: "https://api.cloudbees.io"
-          name: my-Docker-artifact
-          version: 1.0.0
-          url: "https://hub.docker.com/repository/docker/example"
-          digest: "sha256:abcdef1234567890"
-          type: "Docker"
-
-----
-
-The following example specifies the artifact label:
-
-[source,yaml]
-----
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: register-artifact-step-digest
+      - name: register-artifact-step-digest-label
         uses: cloudbees-io-gha/register-build-artifact@v3
         with:
           cloudbees-url: "https://api.cloudbees.io"
