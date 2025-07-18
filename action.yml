@@ -27,6 +27,14 @@ inputs:
     required: false
   label:
     description: 'The list of label of the artifact.'
+  repository-url:
+    description: "The clone URL of the repository."
+  commit:
+    description: "The commit ID from the source repository."
+  commit-url:
+    description: "The commit URL from the source repository."
+  ref:
+    description: "The ref or branch of the checked-out repository."
 
 outputs:
   cbp_artifact_id:
@@ -43,3 +51,7 @@ runs:
     ARTIFACT_DIGEST: ${{ inputs.digest }}
     ARTIFACT_TYPE: ${{ inputs.type }}
     ARTIFACT_LABEL: ${{ inputs.label }}
+    ARTIFACT_REPOSITORY_URL: ${{ inputs.repository-url }}
+    ARTIFACT_COMMIT: ${{ inputs.commit }}
+    ARTIFACT_COMMIT_URL: ${{ inputs.commit-url }}
+    ARTIFACT_REF: ${{ inputs.ref }}
