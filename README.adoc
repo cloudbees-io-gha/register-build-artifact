@@ -126,7 +126,6 @@ The following example specifies the artifact digest and label:
           label: "staging,prod"
           repository-url: "http://github.com/example/repo"
           commit: "550e8400-e29b-41d4-a716-446655440000"
-          commit-url: "http://github.com/example/repo/commit/550e8400-e29b-41d4-a716-446655440000"
           ref: "main"
 ----
 
