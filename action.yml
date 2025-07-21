@@ -51,5 +51,4 @@ runs:
     ARTIFACT_LABEL: ${{ inputs.label }}
     ARTIFACT_REPOSITORY_URL: ${{ inputs.repository-url }}
     ARTIFACT_COMMIT: ${{ inputs.commit }}
-    ARTIFACT_COMMIT_URL: ${{ inputs.commit-url }}
     ARTIFACT_REF: ${{ inputs.ref }}
