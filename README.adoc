@@ -63,12 +63,7 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 | `commit`
 | String
 | No
-
 | The commit ID from the source repository.
-| `commit-url`
-| String
-| No
-| The commit URL from the source repository.
 
 | `ref`
 | String

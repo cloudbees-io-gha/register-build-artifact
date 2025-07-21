@@ -31,8 +31,6 @@ inputs:
     description: "The clone URL of the repository."
   commit:
     description: "The commit ID from the source repository."
-  commit-url:
-    description: "The commit URL from the source repository."
   ref:
     description: "The ref or branch of the checked-out repository."
 
