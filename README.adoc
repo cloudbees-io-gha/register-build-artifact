@@ -55,6 +55,20 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 | No
 | The type of artifact, such as Docker or Maven.
 
+| `repository-url`
+| String
+| No
+| The clone URL of the repository.
+
+| `commit`
+| String
+| No
+| The commit ID from the source repository.
+
+| `ref`
+| String
+| No
+| The ref or branch of the checked-out repository.
 |===
 
 === Outputs
@@ -110,7 +124,9 @@ The following example specifies the artifact digest and label:
           digest: "sha256:abcdef1234567890"
           type: "Docker"
           label: "staging,prod"
-
+          repository-url: "http://github.com/example/repo"
+          commit: "550e8400-e29b-41d4-a716-446655440000"
+          ref: "main"
 ----
 
 === Full workflow and run example
