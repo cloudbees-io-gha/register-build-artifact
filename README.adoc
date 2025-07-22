@@ -23,52 +23,54 @@ Refer to link:https://docs.cloudbees.com/docs/cloudbees-platform/latest/github-a
 | `name`
 | String
 | Yes
-| The name of the artifact to send to the CloudBees platform for artifact traceability purposes.
+| The name of the artifact reported to the CloudBees platform.
+
+| `url`
+| String
+| Yes
+| The URL where the artifact version is located.
+For example, `docker.io/myapp/myimg:1.0.0`.
 
 | `version`
 | String
 | Yes
 | The version of the artifact to send to the CloudBees platform for artifact traceability purposes.
 
-| `url`
-| String
-| Yes
-| The URL where the artifact version can be pulled for deployment.
-
 | `cloudbees-url`
 | String
 | No
 | The CloudBees platform URL. The default value is `"https://api.cloudbees.io"`.
-
-| `digest`
-| String
-| No
-| The artifact digest that uniquely identifies the artifact.
-
-| `label`
-| String 
-| No 
-| The list of labels for the artifact.
-
-| `type`
-| String
-| No
-| The type of artifact, such as Docker or Maven.
-
-| `repository-url`
-| String
-| No
-| The clone URL of the repository.
 
 | `commit`
 | String
 | No
 | The commit ID from the source repository.
 
+| `digest`
+| String
+| No, but it is recommended to help track artifact versions across repositories. 
+For more information, refer to https://docs.cloudbees.com/docs/cloudbees-platform/latest/workflows/artifacts#history[Artifact deployment and publish history].
+| The hash or checksum that uniquely identifies the artifact version.
+
+| `label`
+| String
+| No
+| A comma-separated list of artifact labels.
+
 | `ref`
 | String
 | No
-| The ref or branch of the checked-out repository.
+| The ref or branch of the artifact repository.
+
+| `repository-url`
+| String
+| No
+| The artifact repository URL.
+
+| `type`
+| String
+| No
+| The type of artifact, such as Docker or Maven.
 |===
 
 === Outputs
@@ -101,32 +103,31 @@ The following is a basic example for using the v3 action:
         uses: cloudbees-io-gha/register-build-artifact@v3
         with:
           name: my-artifact
+          url: https://my-artifact-url.com
           version: 1.0.0
-          url: "https://my-artifact-url.com"
 
 ----
 
 The following example specifies the artifact digest and label:
 
-[source,yaml]
+[source, yaml,role="default-expanded"]
 ----
     permissions:
       id-token: write
       contents: read
     steps:
-      - name: register-artifact-step-digest-label
+      - name: register-artifact-step-with-options
         uses: cloudbees-io-gha/register-build-artifact@v3
         with:
-          cloudbees-url: "https://api.cloudbees.io"
           name: my-Docker-artifact
+          url: https://hub.docker.com/repository/docker/example
           version: 1.0.0
-          url: "https://hub.docker.com/repository/docker/example"
-          digest: "sha256:abcdef1234567890"
-          type: "Docker"
-          label: "staging,prod"
-          repository-url: "http://github.com/example/repo"
-          commit: "550e8400-e29b-41d4-a716-446655440000"
-          ref: "main"
+          commit: 1234abcd-ab34-123cd-56ef-12345678abcd
+          digest: sha256:abcdef1234567890
+          label: staging,prod
+          repository-url: http://github.com/example/repo
+          ref: main
+          type: Docker
 ----
 
 === Full workflow and run example
@@ -165,14 +166,14 @@ jobs:
         uses: cloudbees-io-gha/register-build-artifact@v3
         id: go-action
         with:
-          name: "gha-artifact-test"
+          name: "gha-artifact-step"
           version: 1.0.0
           url: "docker.io/example:latest"
           cloudbees-url: "https://api.cloudbees.io"
-          digest: "sha256:1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqr"
-          label: "For testing"
-          type: "docker"
-      
+          digest: sha256:1234567890abcdef123456123456abcdef789078907890abcdefabcdef123456
+          label: For testing
+          type: docker
+
       - name: Registered Build ArtifactId
         run: echo 'Registered Build ArtifactId ${{ steps.go-action.outputs.cbp_artifact_id }}'
 
