@@ -65,7 +65,7 @@ For more information, refer to https://docs.cloudbees.com/docs/cloudbees-platfor
 | `repository-url`
 | String
 | No
-| The artifact repository URL.
+| The clone URL of the source code repository.
 
 | `type`
 | String
