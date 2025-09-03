@@ -28,14 +28,11 @@ inputs:
   label:
     description: 'The list of label of the artifact.'
   commit:
-    description:
-      The commit ID from the source repository, used when registering the build artifact in CloudBees platform.
+    description: 'The commit ID from the source repository, used when registering the build artifact in CloudBees platform.'
   repository-url:
-    description: >
-      The clone URL of the source repository, used when registering the build artifact in CloudBees platform.
+    description: 'The clone URL of the source repository, used when registering the build artifact in CloudBees platform.'
   ref:
-    description: >
-      The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.
+    description: 'The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.'
 
 outputs:
   cbp_artifact_id:
