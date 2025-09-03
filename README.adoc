@@ -61,7 +61,7 @@ Default is `${{ cloudbees.scm.sha }}`.
 | `ref`
 | String
 | Only required if a different repository/branch.^<<footnote,[1]>>^
-|The ref or branch of the source repository, used when registering the build artifact in CloudBees platform.
+|The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.
 Default is `${{ cloudbees.scm.ref }}`.
 
 | `repository-url`
