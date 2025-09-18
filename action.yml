@@ -43,7 +43,7 @@ outputs:
 
 runs:
   using: "docker"
-  image: "docker://index.docker.io/cdrosamples/gha-register-build-artifact:autotest
+  image: "docker://index.docker.io/cdrosamples/gha-register-build-artifact:autotest"
   env:
     CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
     ARTIFACT_NAME: ${{ inputs.name }}
