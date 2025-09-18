@@ -29,10 +29,13 @@ inputs:
     description: 'The list of label of the artifact.'
   commit:
     description: 'The commit ID from the source repository, used when registering the build artifact in CloudBees platform.'
+    default: ${{ github.sha }}
   repository-url:
     description: 'The clone URL of the source repository, used when registering the build artifact in CloudBees platform.'
+    default: ${{ github.repositoryUrl }}
   ref:
     description: 'The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.'
+    default: ${{ github.ref }}
 
 outputs:
   cbp_artifact_id:
