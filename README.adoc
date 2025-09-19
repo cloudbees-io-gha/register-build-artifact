@@ -68,7 +68,7 @@ Default is `${{ github.ref }}`.
 | String
 | Only required if a different repository/branch.^<<footnote,[1]>>^
 | The clone URL of the source repository, used when registering the build artifact in CloudBees platform.
-Default is `${{ github.repositoryUrl }}`.
+Default is `${{ github.server_url }}/${{ github.repository }}`.
 
 | `type`
 | String
