@@ -56,19 +56,19 @@ For more information, refer to https://docs.cloudbees.com/docs/cloudbees-platfor
 | String
 | Only required if a different repository/branch.^<<footnote,[1]>>^
 | The commit ID from the source repository, used when registering the build artifact in CloudBees platform.
-Default is `${{ cloudbees.scm.sha }}`.
+Default is `${{ github.sha }}`.
 
 | `ref`
 | String
 | Only required if a different repository/branch.^<<footnote,[1]>>^
 |The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.
-Default is `${{ cloudbees.scm.ref }}`.
+Default is `${{ github.ref }}`.
 
 | `repository-url`
 | String
 | Only required if a different repository/branch.^<<footnote,[1]>>^
 | The clone URL of the source repository, used when registering the build artifact in CloudBees platform.
-Default is `${{ cloudbees.scm.repositoryUrl }}`.
+Default is `${{ github.server_url }}/${{ github.repository }}`.
 
 | `type`
 | String
