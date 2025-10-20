@@ -36,6 +36,10 @@ inputs:
   ref:
     description: 'The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.'
     default: ${{ github.ref }}
+  component-id:
+    description: >
+      The ID of the component associated with the artifact. If not provided, the artifact is registered with the component of the current workflow run.
+    default: ${{ github.component.id }}
 
 outputs:
   cbp_artifact_id:
@@ -55,3 +59,4 @@ runs:
     ARTIFACT_REPOSITORY_URL: ${{ inputs.repository-url }}
     ARTIFACT_COMMIT: ${{ inputs.commit }}
     ARTIFACT_REF: ${{ inputs.ref }}
+    ARTIFACT_COMPONENT_ID: ${{ inputs.component-id }}

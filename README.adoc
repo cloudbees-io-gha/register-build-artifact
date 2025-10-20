@@ -43,7 +43,7 @@ For example, `docker.io/myapp/myimg:1.0.0`.
 
 | `digest`
 | String
-| No, but recommended for tracking artifact versions across repositories. 
+| No, but recommended for tracking artifact versions across repositories.
 | The hash or checksum that uniquely identifies the artifact version.
 For more information, refer to https://docs.cloudbees.com/docs/cloudbees-platform/latest/workflows/artifacts#history[Artifact deployment and publish history].
 
@@ -74,6 +74,12 @@ Default is `${{ github.server_url }}/${{ github.repository }}`.
 | String
 | No
 | The type of artifact, such as Docker or Maven.
+
+| `component-id`
+| String
+| No
+| The ID of the component associated with the artifact. If not provided, the artifact is registered with the component of the current workflow run.
+Default is `${{ github.component.id }}`.
 |===
 
 [#footnote]
@@ -91,7 +97,7 @@ If a different commit/repository/branch has been checked out for building the ar
 
 | `cbp_artifact_id`
 | String
-| The identifier of the artifact sent to the 
+| The identifier of the artifact sent to the
 CloudBees platform for artifact traceability purposes.
 
 |===
@@ -200,7 +206,7 @@ The artifact is shown to be published by the GHA workflow.
 
 == License
 
-This code is made available under the 
+This code is made available under the
 link:https://opensource.org/license/mit/[MIT license].
 
 == References
