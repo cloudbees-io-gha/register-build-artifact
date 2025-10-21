@@ -64,7 +64,7 @@ Default is `${{ github.sha }}`.
 |The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.
 Default is `${{ github.ref }}`.
 
-| `repository-url`
+| `repository_url`
 | String
 | Only required if a different repository/branch.^<<footnote,[1]>>^
 | The clone URL of the source repository, used when registering the build artifact in CloudBees platform.
@@ -75,11 +75,10 @@ Default is `${{ github.server_url }}/${{ github.repository }}`.
 | No
 | The type of artifact, such as Docker or Maven.
 
-| `component-id`
+| `component_id`
 | String
 | No
-| The ID of the component associated with the artifact. If not provided, the artifact is registered with the component of the current workflow run.
-Default is `${{ github.component.id }}`.
+| The ID of the component associated with the artifact. If not provided, the default is the component ID where the GHA workflow is located.
 |===
 
 [#footnote]
