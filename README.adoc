@@ -200,8 +200,7 @@ The artifact is shown to be published by the GHA workflow.
 
 == License
 
-This code is made available under the 
-link:https://opensource.org/license/mit/[MIT license].
+This code is made available under the link:https://opensource.org/license/mit/[MIT license].
 
 == References
 
