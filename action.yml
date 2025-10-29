@@ -46,8 +46,7 @@ outputs:
 
 runs:
   using: "docker"
-  image: "docker://ghcr.io/karthiknaveene/gha-action/gha-register-build-artifact-action:latest"
-  #image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-415ba0279b2bc85d11174473b5286dc4a3802b32"
+  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-129cef96f4331decda2446aa84aa8f9237d8ce38"
   env:
     CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
     ARTIFACT_NAME: ${{ inputs.name }}
