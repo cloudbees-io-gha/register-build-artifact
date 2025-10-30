@@ -36,6 +36,9 @@ inputs:
   ref:
     description: 'The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.'
     default: ${{ github.ref }}
+  component-id:
+    description: >
+      The ID of the component associated with the artifact. If not provided, the default is the component ID where the GHA workflow is located.
 
 outputs:
   cbp_artifact_id:
@@ -43,7 +46,7 @@ outputs:
 
 runs:
   using: "docker"
-  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-415ba0279b2bc85d11174473b5286dc4a3802b32"
+  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-129cef96f4331decda2446aa84aa8f9237d8ce38"
   env:
     CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
     ARTIFACT_NAME: ${{ inputs.name }}
@@ -55,3 +58,4 @@ runs:
     ARTIFACT_REPOSITORY_URL: ${{ inputs.repository-url }}
     ARTIFACT_COMMIT: ${{ inputs.commit }}
     ARTIFACT_REF: ${{ inputs.ref }}
+    ARTIFACT_COMPONENT_ID: ${{ inputs.component-id }}
