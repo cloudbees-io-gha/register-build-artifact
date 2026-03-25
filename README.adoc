@@ -39,7 +39,7 @@ For example, `docker.io/myapp/myimg:1.0.0`.
 | `cloudbees-url`
 | String
 | No
-| CloudBees Unify URL. The default value is `"https://api.cloudbees.io"`.
+| The CloudBees Unify URL. The default value is `"https://api.cloudbees.io"`.
 
 | `digest`
 | String
