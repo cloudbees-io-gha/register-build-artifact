@@ -1,5 +1,5 @@
-name: 'Register build artifacts in Platform'
-description: 'Report artifact data and version produced by a GHA workflow run to the CloudBees platform.'
+name: 'Register build artifacts in Unify'
+description: 'Report artifact data and version produced by a GHA workflow run to CloudBees Unify.'
 
 branding:
   icon: 'command'
@@ -7,7 +7,7 @@ branding:
 
 inputs:
   cloudbees-url:
-    description: 'The CloudBees platform URL.'
+    description: 'The CloudBees Unify URL.'
     required: false
     default: "https://api.cloudbees.io"
   name:
@@ -28,13 +28,13 @@ inputs:
   label:
     description: 'The list of label of the artifact.'
   commit:
-    description: 'The commit ID from the source repository, used when registering the build artifact in CloudBees platform.'
+    description: 'The commit ID from the source repository, used when registering the build artifact in CloudBees Unify.'
     default: ${{ github.sha }}
   repository-url:
-    description: 'The clone URL of the source repository, used when registering the build artifact in CloudBees platform.'
+    description: 'The clone URL of the source repository, used when registering the build artifact in CloudBees Unify.'
     default: ${{ github.server_url }}/${{ github.repository }}
   ref:
-    description: 'The tag or branch of the source repository, used when registering the build artifact in CloudBees platform.'
+    description: 'The tag or branch of the source repository, used when registering the build artifact in CloudBees Unify.'
     default: ${{ github.ref }}
   component-id:
     description: >
