@@ -50,7 +50,7 @@ outputs:
 
 runs:
   using: "docker"
-  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-6207469e6cbd3fa7e11460af85a6e299fb2da1ba"
+  image: "docker://public.ecr.aws/l7o7z1g8/actions/gha-register-build-artifact:main-331b7eb3cc7d9280d193169b3ad46ae148707b4d"
   env:
     CLOUDBEES_API_URL: ${{ inputs.cloudbees-url }}
     ARTIFACT_NAME: ${{ inputs.name }}
